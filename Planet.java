@@ -5,28 +5,28 @@ public class Planet extends Element {
 	// DATA
 	public static String[] listZone = { "inner", "belt", "outer" };
 	public static String[] listSize = { "tiny", "small", "medium", "large",
-	"huge" };
+			"huge" };
 	public static String[] listClimate = { "lava", "desert", "arid", "terran",
-			"jungle", "ocean", "tundra", "arctic", "ice", "barren" };
+		"jungle", "ocean", "tundra", "arctic", "ice", "barren" };
 	public static String[] listResource = { "none", "minerals", "organic",
-	"tech" };
+			"tech" };
 	public static String[] listExotic = { "" };
 
 	public static int[][] distClimate = {
-			{ 9, 9, 9, 9, 0, 0, 0, 0, 1, 1, 1, 2, 2 }, //inner
-			{ 0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9 }, //belt
-			{ 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9 } //outer
+		{ 9, 9, 9, 9, 0, 0, 0, 0, 1, 1, 1, 2, 2 }, //inner
+		{ 0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9 }, //belt
+		{ 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9 } //outer
 	};
 	public static int[][] distResource = { { 0, 0, 0, 0, 1, 1, 2, 3, 3, 3 }, //L
-			{ 0, 0, 0, 0, 0, 0, 1, 1, 2, 3 }, //D
-			{ 0, 0, 0, 0, 1, 1, 1, 2, 2, 3 }, //A
-			{ 0, 0, 1, 1, 1, 2, 2, 2, 3, 3 }, //T
-			{ 0, 0, 0, 0, 1, 2, 2, 2, 3, 3 }, //J
-			{ 0, 0, 0, 0, 1, 2, 2, 2, 3, 3 }, //O
-			{ 0, 0, 0, 0, 0, 1, 1, 2, 2, 3 }, //T
-			{ 0, 0, 0, 0, 0, 1, 1, 2, 2, 3 }, //A
-			{ 0, 0, 0, 0, 1, 1, 2, 3, 3, 3 }, //I
-			{ 0, 0, 0, 0, 0, 0, 0, 1, 2, 3 } //B
+		{ 0, 0, 0, 0, 0, 0, 1, 1, 2, 3 }, //D
+		{ 0, 0, 0, 0, 1, 1, 1, 2, 2, 3 }, //A
+		{ 0, 0, 1, 1, 1, 2, 2, 2, 3, 3 }, //T
+		{ 0, 0, 0, 0, 1, 2, 2, 2, 3, 3 }, //J
+		{ 0, 0, 0, 0, 1, 2, 2, 2, 3, 3 }, //O
+		{ 0, 0, 0, 0, 0, 1, 1, 2, 2, 3 }, //T
+		{ 0, 0, 0, 0, 0, 1, 1, 2, 2, 3 }, //A
+		{ 0, 0, 0, 0, 1, 1, 2, 3, 3, 3 }, //I
+		{ 0, 0, 0, 0, 0, 0, 0, 1, 2, 3 } //B
 	};
 
 	// ATTRIBUTES
@@ -37,6 +37,7 @@ public class Planet extends Element {
 	public int dayLength;
 	public ArrayList<String> resources = new ArrayList<String>();
 	public ArrayList<String> satellites = new ArrayList<String>();
+	public ArrayList<String> anomalies = new ArrayList<String>();
 
 	// CONSTRUCTOR
 	public Planet(String givenName, String starType) {
@@ -60,6 +61,7 @@ public class Planet extends Element {
 			dayLength += randInt(1, 10);
 		}
 		dayLength += satellites.size();
+		genAnomalies();
 	}
 
 	// CONSTRUCTOR SPECIFIC
@@ -67,6 +69,16 @@ public class Planet extends Element {
 	// METHODS
 	public void rename(String newName) {
 		name = newName;
+	}
+
+	private void genAnomalies() {
+		AnomalyGenerator ag = new AnomalyGenerator();
+		//System.out.println(ag.listAnomaly.length);
+		for (int i = 0; i < randInt(1, 5); i++) {
+			if (randInt(0, 1) == 1) {
+				anomalies.add(ag.genAnom());
+			}
+		}
 	}
 
 	private int genClimate(String starType) {
@@ -106,14 +118,17 @@ public class Planet extends Element {
 
 	public void printDetails() {//name, zone, size, climate, day, resources, sats
 		System.out
-		.print("\nPlanet " + name + " - zone: " + zone + ", size: "
-				+ size + ", climate: " + climate + ", day:" + dayLength
-				+ "hrs");
+				.print("\nPlanet " + name + " - zone: " + zone + ", size: "
+						+ size + ", climate: " + climate + ", day:" + dayLength
+						+ "hrs");
 		if (resources.size() > 0) {
 			System.out.print("\n\t Resources: " + resources.toString());
 		}
 		if (satellites.size() > 0) {
 			System.out.print("\n\t Satellites: " + satellites.toString());
+		}
+		if (anomalies.size() > 0) {
+			System.out.print("\n\t Anomalies: " + anomalies.toString());
 		}
 	}
 

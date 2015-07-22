@@ -9,11 +9,11 @@ public class Star {
 
 	// LISTS
 	public static String[] listType = { "blue", "white", "yellow", "giant",
-			"dwarf", "proto", "binary", "neutron", "nebula", "anomaly" };
+		"dwarf", "proto", "binary", "neutron", "nebula", "anomaly" };
 	public static String[] listNumerals = { "I", "II", "III", "IV", "V", "VI",
-		"VII", "VIII", "IX", "X" };
+			"VII", "VIII", "IX", "X" };
 	public static String[] listSpecials = { "stasis", "turbulence", "minerals",
-		"haven", "cursed", "pirates", "ruins" };
+			"haven", "cursed", "pirates", "ruins" };
 
 	// ATTRIBUTES
 	public static String name;
@@ -147,15 +147,15 @@ public class Star {
 			System.out.println("Special: " + specialDesc);
 		}
 		// print gas & planet details
-		//		for (int i = 0; i < myElements.size(); i++) {
-		//			Element e = myElements.get(i);
-		//			if (e.superclass == "planet") {
-		//				Planet p = (Planet) e;
-		//				p.printDetails();
-		//			} else if (e.superclass == "gas") {
-		//				Gas g = (Gas) e;
-		//				g.printDetails();
-		//			}
-		//		}
+		for (int i = 0; i < myElements.size(); i++) {
+			Element e = myElements.get(i);
+			if (e.superclass == "planet") {
+				Planet p = (Planet) e;
+				p.printDetails();
+			} else if (e.superclass == "gas") {
+				Gas g = (Gas) e;
+				g.printDetails();
+			}
+		}
 	}
 }

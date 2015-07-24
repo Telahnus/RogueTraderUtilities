@@ -1,13 +1,17 @@
 import java.util.Random;
 
+// Jordan Quan
+// Element.java
+// generic class for system elements
+
 public class Element {
 
 	// DATA
 	public static String[] listElements = { "planet", "gas", "asteroid",
-			"stellar" };
+	"stellar" };
 	public static int[] probElements = { 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3 };
 	public static String[] listSatellite = { "dust ring", "debris ring",
-			"tiny moon", "small moon", "medium moon" };
+		"tiny moon", "small moon", "medium moon" };
 
 	// ATTRIBUTES
 	public String superclass;

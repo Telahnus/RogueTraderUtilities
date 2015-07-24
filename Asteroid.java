@@ -1,8 +1,12 @@
+// Jordan Quan
+// Asteroid.java
+// creates asteroid type elements
+
 public class Asteroid extends Element {
 
 	// DATA
 	public static String[] listAsteroid = { "asteroid cluster",
-			"asteroid ring", "large asteroid", "comet" };
+		"asteroid ring", "large asteroid", "comet" };
 
 	// ATTRIBUTES
 

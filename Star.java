@@ -9,11 +9,11 @@ public class Star {
 
 	// LISTS
 	public static String[] listType = { "blue", "white", "yellow", "giant",
-		"dwarf", "proto", "binary", "neutron", "nebula", "anomaly" };
+			"dwarf", "proto", "binary", "neutron", "nebula", "anomaly" };
 	public static String[] listNumerals = { "I", "II", "III", "IV", "V", "VI",
-			"VII", "VIII", "IX", "X" };
+		"VII", "VIII", "IX", "X" };
 	public static String[] listSpecials = { "stasis", "turbulence", "minerals",
-			"haven", "cursed", "pirates", "ruins" };
+		"haven", "cursed", "pirates", "ruins" };
 
 	// ATTRIBUTES
 	public static String name;
@@ -25,7 +25,7 @@ public class Star {
 
 	public static ArrayList<Element> myElements = new ArrayList<Element>();
 
-	// RANDOM INTEGER (inclusive)
+	// RANDOM INTEGER UTILITY (inclusive)
 	private static int randInt(int min, int max) {
 		Random rand = new Random();
 		int randomNum = rand.nextInt((max - min) + 1) + min;
@@ -37,8 +37,8 @@ public class Star {
 		name = starName;
 		planet_count = 0;
 		if (random) {
-			starType = listType[randInt(0, listType.length - 1)];
-			if (starType == "binary") {
+			starType = listType[randInt(0, listType.length - 1)]; // gen star type
+			if (starType == "binary") { // gen two if binary, from simple star types
 				starType = listType[randInt(0, 4)];
 				companion = listType[randInt(0, 4)];
 			}
@@ -46,14 +46,15 @@ public class Star {
 				Element e = new Element();
 				myElements.add(e);
 			}
-			addStarElements(starType);
-			specifyElements();
+			addStarElements(starType); // add elements based on special star types
+			specifyElements(); // replace generic elements with specifics
 			if (randInt(1, 10) > 8) {
 				addSpecial();
 			}
 		}
 	}
 
+	// add special description if system has one
 	static void addSpecial() {
 		special = listSpecials[randInt(0, listSpecials.length - 1)];
 		switch (special) {
@@ -83,12 +84,14 @@ public class Star {
 		}
 	}
 
+	// replaces generic elements with specific details
 	static void specifyElements() {
 		for (int i = 0; i < myElements.size(); i++) {
 			Element e = myElements.get(i);
 			switch (e.superclass) {
 			case "stellar":
-				if (e.subclass == null) {
+				if (e.subclass == null) { // star type modifications may have already added specific stellars
+					// could switch order of calls to fix
 					myElements.set(i, new Stellar());
 				}
 				break;
@@ -111,6 +114,7 @@ public class Star {
 		}
 	}
 
+	// add stellar elements based on star type
 	static void addStarElements(String starType) {
 		switch (starType) {
 		case "proto":
@@ -130,6 +134,7 @@ public class Star {
 	// MAIN
 	public static void main(String[] args) {
 		Star s1 = new Star("Imperialis", true);
+		// print star details
 		System.out.println("System name: " + s1.name);
 		System.out.print("Star type: " + s1.starType);
 		if (companion != null) {

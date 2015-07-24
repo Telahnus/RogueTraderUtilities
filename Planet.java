@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+// Jordan Quan
+// Planet.java
+// generate planets in all their detail
+
 public class Planet extends Element {
 
 	// DATA
@@ -12,6 +16,7 @@ public class Planet extends Element {
 			"tech" };
 	public static String[] listExotic = { "" };
 
+	// probability distributions
 	public static int[][] distClimate = {
 		{ 9, 9, 9, 9, 0, 0, 0, 0, 1, 1, 1, 2, 2 }, //inner
 		{ 0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 7, 8, 9 }, //belt
@@ -45,6 +50,8 @@ public class Planet extends Element {
 		superclass = "planet";
 		int numZone = randInt(0, listZone.length - 1); // gen zone number
 		zone = listZone[numZone]; // then zone string
+		// order of climate generation calls is important
+		// should prolly fix
 		int numClimate = genClimate(starType); // gen climate number modified by star type
 		if (numClimate == -1) { // if starType made barren, keep it, dont change for zone
 			numClimate = 9;
@@ -56,11 +63,11 @@ public class Planet extends Element {
 		size = listSize[randInt(0, listSize.length - 1)];
 		genResources(numClimate); // gen resources by climate
 		genSatellites();
-		dayLength = 0;
+		dayLength = 0; // day length is 3d10 hrs
 		for (int i = 0; i < 3; i++) {
 			dayLength += randInt(1, 10);
 		}
-		dayLength += satellites.size();
+		dayLength += satellites.size(); // +1hr per satellite
 		genAnomalies();
 	}
 
@@ -71,6 +78,7 @@ public class Planet extends Element {
 		name = newName;
 	}
 
+	// use anomalygenerator to generate planetary anomalies
 	private void genAnomalies() {
 		AnomalyGenerator ag = new AnomalyGenerator();
 		//System.out.println(ag.listAnomaly.length);
@@ -81,6 +89,7 @@ public class Planet extends Element {
 		}
 	}
 
+	// gen climate number modified by star type
 	private int genClimate(String starType) {
 		int num = randInt(0, listClimate.length - 1);
 		switch (starType) {
@@ -97,8 +106,10 @@ public class Planet extends Element {
 			num += 2;
 			break;
 		default:
+			num = -1;
 			break;
 		}
+		// if star type takes num beyond min/max, set to error
 		if (num < 0 || num > 9) {
 			num = -1;
 		}
@@ -116,7 +127,7 @@ public class Planet extends Element {
 		}
 	}
 
-	public void printDetails() {//name, zone, size, climate, day, resources, sats
+	public void printDetails() {//name, zone, size, climate, day, resources, sats, anoms
 		System.out
 				.print("\nPlanet " + name + " - zone: " + zone + ", size: "
 						+ size + ", climate: " + climate + ", day:" + dayLength

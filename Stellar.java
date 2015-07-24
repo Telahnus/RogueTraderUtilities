@@ -1,8 +1,12 @@
+// Jordan Quan
+// Stellar.java
+// creates stellar anomalies
+
 public class Stellar extends Element {
 
 	// DATA
 	public static String[] listStellar = { "flare", "radiation", "gravity",
-	"dust" };
+			"dust" };
 
 	// ATTRIBUTES
 

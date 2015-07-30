@@ -50,21 +50,14 @@ public class Planet extends Element {
 		superclass = "planet";
 		int numZone = randInt(0, listZone.length - 1); // gen zone number
 		zone = listZone[numZone]; // then zone string
-		// order of climate generation calls is important
-		// should prolly fix
-		int numClimate = genClimate(starType); // gen climate number modified by star type
-		if (numClimate == -1) { // if starType made barren, keep it, dont change for zone
-			numClimate = 9;
-		} else { // then modify by zone
-			numClimate = distClimate[numZone][numClimate];
-		}
+		int numClimate = genClimate(starType, numZone); // gen climate num
 		climate = listClimate[numClimate]; // then get climate string
 		subclass = climate;
 		size = listSize[randInt(0, listSize.length - 1)];
 		genResources(numClimate); // gen resources by climate
 		genSatellites();
 		dayLength = 0; // day length is 3d10 hrs
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			dayLength += randInt(1, 10);
 		}
 		dayLength += satellites.size(); // +1hr per satellite
@@ -89,9 +82,11 @@ public class Planet extends Element {
 		}
 	}
 
-	// gen climate number modified by star type
-	private int genClimate(String starType) {
-		int num = randInt(0, listClimate.length - 1);
+	// gen climate number modified by star type and zone
+	private int genClimate(String starType, int numZone) {
+		int max = distClimate[numZone].length - 1; // determine max length of climate dist
+		int num = randInt(0, max); // randomly pick an index from dist climate
+		// modify by star type
 		switch (starType) {
 		case "blue":
 			num -= 2;
@@ -105,13 +100,14 @@ public class Planet extends Element {
 		case "dwarf":
 			num += 2;
 			break;
-		default:
-			num = -1;
+		default: // bug resolved
 			break;
 		}
 		// if star type takes num beyond min/max, set to error
-		if (num < 0 || num > 9) {
-			num = -1;
+		if (num < 0 || num > max) {
+			num = 9;
+		} else {
+			num = distClimate[numZone][num];
 		}
 		return num;
 	}
@@ -133,13 +129,13 @@ public class Planet extends Element {
 						+ size + ", climate: " + climate + ", day:" + dayLength
 						+ "hrs");
 		if (resources.size() > 0) {
-			System.out.print("\n\t Resources: " + resources.toString());
+			System.out.print("\n\tResources: " + resources.toString());
 		}
 		if (satellites.size() > 0) {
-			System.out.print("\n\t Satellites: " + satellites.toString());
+			System.out.print("\n\tSatellites: " + satellites.toString());
 		}
 		if (anomalies.size() > 0) {
-			System.out.print("\n\t Anomalies: " + anomalies.toString());
+			System.out.print("\n\tAnomalies: " + anomalies.toString());
 		}
 	}
 

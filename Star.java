@@ -9,11 +9,11 @@ public class Star {
 
 	// LISTS
 	public static String[] listType = { "blue", "white", "yellow", "giant",
-			"dwarf", "proto", "binary", "neutron", "nebula", "anomaly" };
+		"dwarf", "proto", "binary", "neutron", "nebula", "anomaly" };
 	public static String[] listNumerals = { "I", "II", "III", "IV", "V", "VI",
-		"VII", "VIII", "IX", "X" };
+			"VII", "VIII", "IX", "X" };
 	public static String[] listSpecials = { "stasis", "turbulence", "minerals",
-		"haven", "cursed", "pirates", "ruins" };
+			"haven", "cursed", "pirates", "ruins" };
 
 	// ATTRIBUTES
 	public static String name;
